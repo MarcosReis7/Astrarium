@@ -20,15 +20,11 @@ public class Ex extends JPanel{
 	JLabel astrarium,pos1,pos2, pos3, pos4, pos5, pos6, pos7;
 	ImageIcon imgAstrarium, bt, imgPos1, imgPos2, imgPos3, imgPos4, imgPos5, imgPos6, imgPos7;
 	
-	
-	
 	public Ex(){
 		game();
 		definirEventos();
 			
 	}
-	
-
 
 	public void game(){
 
@@ -111,7 +107,8 @@ public class Ex extends JPanel{
 		bt5.setOpaque(false);
 		bt5.setContentAreaFilled(false);
 		bt5.setBorderPainted(false);
-		bt5.setBounds(728, 278, 15, 15);
+		bt5.setBounds(728, 278, 150, 150);
+		bt5.setBounds(653, 703, 15, 15);
 		
 		bt6 = new JButton();
 		bt6.setBorder(null);
@@ -119,6 +116,7 @@ public class Ex extends JPanel{
 		bt6.setContentAreaFilled(false);
 		bt6.setBorderPainted(false);
 		bt6.setBounds(653, 703, 15, 15);
+		bt6.setBounds(728, 278, 150, 150);
 
 
 		
@@ -196,14 +194,20 @@ public class Ex extends JPanel{
 									while(rs_3.next()) {
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
-										if (bt_clic_2 == 2 && bt_clic_3 == 1 || bt_clic_2 == 1 && bt_clic_3 == 2) {
+										
+										if (bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == false|| bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == false) {
 											pos1.setVisible(true);
+										}else if(bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == true|| bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
 										}
+										String updt_2 = "UPDATE astrarium SET bt_atual = 1";
+										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
+										int updt_22 = up_2.executeUpdate();
 									}
 								}
 							}
-							
-							
 						}
 						rs_1.close();
 						cons_1.close();
@@ -246,7 +250,7 @@ public class Ex extends JPanel{
 								
 								String updt_1 = "UPDATE astrarium SET bt_atual = 2";
 								PreparedStatement up = bd.c.prepareStatement(updt_1);
-								int updt = up.executeUpdate();
+								int updt_12 = up.executeUpdate();
 								
 								String consulta_3 = "SELECT bt_atual FROM astrarium";
 								PreparedStatement cons_3 = bd.c.prepareStatement(consulta_3);
@@ -258,16 +262,47 @@ public class Ex extends JPanel{
 									while(rs_3.next()) {
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
-										if (bt_clic_2 == 2 && bt_clic_3 == 1 || bt_clic_2 == 1 && bt_clic_3 == 2) {
+										if (bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == false|| bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == false) {
 											pos1.setVisible(true);
+										}else if(bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == true|| bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
 										}
+										
+										if (bt_clic_2 == 2 & bt_clic_3 == 3 & pos2.isVisible() == false|| bt_clic_2 == 3 & bt_clic_3 == 2 & pos2.isVisible() == false) {
+											pos2.setVisible(true);
+										}else if(bt_clic_2 == 2 & bt_clic_3 == 3 & pos2.isVisible() == true|| bt_clic_2 == 3 & bt_clic_3 == 2 & pos2.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										
+										if (bt_clic_2 == 2 & bt_clic_3 == 4 & pos4.isVisible() == false|| bt_clic_2 == 4 & bt_clic_3 == 2 & pos4.isVisible() == false) {
+											pos4.setVisible(true);
+										}else if(bt_clic_2 == 2 & bt_clic_3 == 4 & pos4.isVisible() == true|| bt_clic_2 == 4 & bt_clic_3 == 2 & pos4.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										
+										if (bt_clic_2 == 2 & bt_clic_3 == 5 & pos5.isVisible() == false|| bt_clic_2 == 5 & bt_clic_3 == 2 & pos5.isVisible() == false) {
+											pos5.setVisible(true);
+										}else if(bt_clic_2 == 2 & bt_clic_3 == 5 & pos5.isVisible() == true|| bt_clic_2 == 5 & bt_clic_3 == 2 & pos5.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										String updt_2 = "UPDATE astrarium SET bt_clic = 2";
+										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
+										int updt_22 = up_2.executeUpdate();
 									}
 								}
-								
-															}
+							}
+                        }
 							
 							
-						}
+						
 						rs_1.close();
 						cons_1.close();
 						bd.close();
@@ -321,15 +356,47 @@ public class Ex extends JPanel{
 									while(rs_3.next()) {
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
-										if (bt_clic_2 == 2 && bt_clic_3 == 1 || bt_clic_2 == 1 && bt_clic_3 == 2) {
-											pos1.setVisible(true);
+										if (bt_clic_2 == 3 & bt_clic_3 == 6 & pos7.isVisible() == false|| bt_clic_2 == 6 & bt_clic_3 == 3 & pos7.isVisible() == false) {
+											pos7.setVisible(true);
+										}else if(bt_clic_2 == 3 & bt_clic_3 == 6 & pos7.isVisible() == true|| bt_clic_2 == 6 & bt_clic_3 == 3 & pos7.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										
+										if (bt_clic_2 == 3 & bt_clic_3 == 4 & pos3.isVisible() == false|| bt_clic_2 == 4 & bt_clic_3 == 3 & pos3.isVisible() == false) {
+											pos3.setVisible(true);
+										}else if(bt_clic_2 == 3 & bt_clic_3 == 4 & pos3.isVisible() == true|| bt_clic_2 == 4 & bt_clic_3 == 3 & pos3.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										
+										if (bt_clic_2 == 3 & bt_clic_3 == 2 & pos2.isVisible() == false|| bt_clic_2 == 2 & bt_clic_3 == 3 & pos2.isVisible() == false) {
+											pos2.setVisible(true);
+										}else if(bt_clic_2 == 3 & bt_clic_3 == 2 & pos2.isVisible() == true|| bt_clic_2 == 2 & bt_clic_3 == 3 & pos2.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										
+										if (bt_clic_2 == 3 & bt_clic_3 == 5 & pos6.isVisible() == false|| bt_clic_2 == 5 & bt_clic_3 == 3 & pos6.isVisible() == false) {
+											pos6.setVisible(true);
+										}else if(bt_clic_2 == 3 & bt_clic_3 == 5 & pos6.isVisible() == true|| bt_clic_2 == 5 & bt_clic_3 == 3 & pos6.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										String updt_2 = "UPDATE astrarium SET bt_clic = 3";
+										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
+										int updt_22 = up_2.executeUpdate();
 										}
 									}
 								}
 							}
 							
 							
-						}
+						
 						rs_1.close();
 						cons_1.close();
 						bd.close();
@@ -382,9 +449,24 @@ public class Ex extends JPanel{
 									while(rs_3.next()) {
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
-										if (bt_clic_2 == 2 && bt_clic_3 == 1 || bt_clic_2 == 1 && bt_clic_3 == 2) {
-											pos1.setVisible(true);
+										if (bt_clic_2 == 4 & bt_clic_3 == 2 & pos4.isVisible() == false|| bt_clic_2 == 2 & bt_clic_3 == 4 & pos4.isVisible() == false) {
+											pos4.setVisible(true);
+										}else if(bt_clic_2 == 4 & bt_clic_3 == 2 & pos4.isVisible() == true|| bt_clic_2 == 2 & bt_clic_3 == 4 & pos4.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
 										}
+										
+										if (bt_clic_2 == 4 & bt_clic_3 == 3 & pos3.isVisible() == false|| bt_clic_2 == 3 & bt_clic_3 == 4 & pos3.isVisible() == false) {
+											pos3.setVisible(true);
+										}else if(bt_clic_2 == 4 & bt_clic_3 == 3 & pos3.isVisible() == true|| bt_clic_2 == 3 & bt_clic_3 == 4 & pos3.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										String updt_2 = "UPDATE astrarium SET bt_clic = 4";
+										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
+										int updt_22 = up_2.executeUpdate();
 									}
 								}
 							}
@@ -443,9 +525,24 @@ public class Ex extends JPanel{
 									while(rs_3.next()) {
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
-										if (bt_clic_2 == 2 && bt_clic_3 == 1 || bt_clic_2 == 1 && bt_clic_3 == 2) {
-											pos1.setVisible(true);
+										if (bt_clic_2 == 5 & bt_clic_3 == 2 & pos5.isVisible() == false|| bt_clic_2 == 2 & bt_clic_3 == 5 & pos5.isVisible() == false) {
+											pos5.setVisible(true);
+										}else if(bt_clic_2 == 5 & bt_clic_3 == 2 & pos5.isVisible() == true|| bt_clic_2 == 2 & bt_clic_3 == 5 & pos5.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
 										}
+										
+										if (bt_clic_2 == 5 & bt_clic_3 == 3 & pos6.isVisible() == false|| bt_clic_2 == 3 & bt_clic_3 == 5 & pos6.isVisible() == false) {
+											pos6.setVisible(true);
+										}else if(bt_clic_2 == 5 & bt_clic_3 == 3 & pos6.isVisible() == true|| bt_clic_2 == 3 & bt_clic_3 == 5 & pos6.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
+										}
+										String updt_2 = "UPDATE astrarium SET bt_clic = 5";
+										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
+										int updt_22 = up_2.executeUpdate();
 									}
 								}
 							}
@@ -463,7 +560,7 @@ public class Ex extends JPanel{
 		
 		bt6	.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				System.out.println("5");
+				System.out.println("6");
 
 				if (bd.getConnection()) {
 					
@@ -504,9 +601,16 @@ public class Ex extends JPanel{
 									while(rs_3.next()) {
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
-										if (bt_clic_2 == 2 && bt_clic_3 == 1 || bt_clic_2 == 1 && bt_clic_3 == 2) {
-											pos1.setVisible(true);
+										if (bt_clic_2 == 6 & bt_clic_3 == 3 & pos7.isVisible() == false|| bt_clic_2 == 3 & bt_clic_3 == 6 & pos7.isVisible() == false) {
+											pos7.setVisible(true);
+										}else if(bt_clic_2 == 6 & bt_clic_3 == 3 & pos7.isVisible() == true|| bt_clic_2 == 3 & bt_clic_3 == 6 & pos7.isVisible() == true) {
+											System.out.println("Linha já estabelecida");										
+										}else {
+											System.out.println("Botão fora de alcance");
 										}
+										String updt_2 = "UPDATE astrarium SET bt_clic = 6";
+										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
+										int updt_22 = up_2.executeUpdate();
 									}
 								}
 							}
