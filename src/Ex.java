@@ -3,22 +3,14 @@ import javax.swing.*;
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
-
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.Color;
-
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 
 public class Ex extends JPanel{	
 	Container c1;
 	JPanel pnInicio;
-	JButton bt1, bt2, bt3, bt4, bt5, bt6;
+	JButton bt1, bt2, bt3, bt4, bt5, bt6, btExit;
 	JLabel astrarium,pos1,pos2, pos3, pos4, pos5, pos6, pos7;
-	ImageIcon imgAstrarium, bt, imgPos1, imgPos2, imgPos3, imgPos4, imgPos5, imgPos6, imgPos7;
+	ImageIcon imgExit, imgAstrarium, bt, imgPos1, imgPos2, imgPos3, imgPos4, imgPos5, imgPos6, imgPos7;
 	
 	public Ex(){
 		game();
@@ -35,6 +27,12 @@ public class Ex extends JPanel{
 		imgAstrarium = new ImageIcon("fase1.png");
 		astrarium = new JLabel(imgAstrarium);
 		astrarium.setBounds(350, 0, 600, 800);
+		
+		imgExit = new ImageIcon("exit.jpg");
+		btExit = new JButton(imgExit);
+		btExit.setBorder(null);
+		btExit.setBounds(1300, 20, 38, 37);
+		
 		
 		imgPos1 = new ImageIcon("pos5.png");
 		pos1 = new JLabel(imgPos1);
@@ -143,7 +141,8 @@ public class Ex extends JPanel{
 		add(bt4);	
 		add(bt5);
 		add(bt6);	
-
+		add(btExit);
+		
 		add(astrarium);
 		
 		add(pnInicio);
@@ -152,6 +151,29 @@ public class Ex extends JPanel{
 
 	public void definirEventos(){
 		BD bd = new BD();
+		
+		btExit.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				if (bd.getConnection()) {
+					
+					try {
+						
+						String updt_1 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+						PreparedStatement up = bd.c.prepareStatement(updt_1);
+						int updt = up.executeUpdate();
+						bd.close();
+						System.exit(0); // Close the game
+					} catch (SQLException erro) {
+					}
+				} else {
+					System.out.println("Erro ao conectar!");
+				}	
+			}
+		});
+
 		bt1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				System.out.println("1");
@@ -163,7 +185,12 @@ public class Ex extends JPanel{
 						PreparedStatement cons_1 = bd.c.prepareStatement(consulta_1);
 						ResultSet rs_1 = cons_1.executeQuery();
 						
-						
+						remove(bt1);
+						add(bt2);
+						remove(bt3);
+						remove(bt4);	
+						remove(bt5);
+						remove(bt6);
 						
 						while (rs_1.next()) {
 							int bt_clic = rs_1.getInt("bt_clic");
@@ -195,16 +222,29 @@ public class Ex extends JPanel{
 										int bt_clic_3 = rs_3.getInt("bt_atual");
 										System.out.println("o botão que foi clicado agora foi o: "+ bt_clic_3);
 										
-										if (bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == false|| bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == false) {
+										if (bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == false || bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == false) {
 											pos1.setVisible(true);
-										}else if(bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == true|| bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == true) {
-											System.out.println("Linha já estabelecida");										
+										}else if(bt_clic_2 == 2 & bt_clic_3 == 1 & pos1.isVisible() == true || bt_clic_2 == 1 & bt_clic_3 == 2 & pos1.isVisible() == true) {
+											System.out.println("Linha já estabelecida");	
+											
 										}else {
 											System.out.println("Botão fora de alcance");
 										}
 										String updt_2 = "UPDATE astrarium SET bt_atual = 1";
 										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
 										int updt_22 = up_2.executeUpdate();
+										if(pos1.isVisible() == true & pos2.isVisible() == true & pos3.isVisible() == true & pos4.isVisible() == true & pos5.isVisible() == true & pos6.isVisible() == true & pos7.isVisible() == true) {
+											try {
+												
+												String updt_3 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+												PreparedStatement up_ = bd.c.prepareStatement(updt_3);
+												int updt_ = up_.executeUpdate();
+												System.out.println("VOCÊ GANHOU!!!");
+												bd.close();
+												System.exit(0); // Close the game
+											} catch (SQLException erro) {
+											}
+										}
 									}
 								}
 							}
@@ -231,7 +271,12 @@ public class Ex extends JPanel{
 						PreparedStatement cons_1 = bd.c.prepareStatement(consulta_1);
 						ResultSet rs_1 = cons_1.executeQuery();
 						
-						
+						add(bt1);
+						remove(bt2);
+						add(bt3);
+						add(bt4);	
+						add(bt5);
+						remove(bt6);
 						
 						while (rs_1.next()) {
 							int bt_clic = rs_1.getInt("bt_clic");
@@ -296,6 +341,17 @@ public class Ex extends JPanel{
 										String updt_2 = "UPDATE astrarium SET bt_clic = 2";
 										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
 										int updt_22 = up_2.executeUpdate();
+										if(pos1.isVisible() == true & pos2.isVisible() == true & pos3.isVisible() == true & pos4.isVisible() == true & pos5.isVisible() == true & pos6.isVisible() == true & pos7.isVisible() == true) {
+											try {
+												
+												String updt_3 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+												PreparedStatement up_ = bd.c.prepareStatement(updt_3);
+												int updt_ = up_.executeUpdate();
+												System.out.println("VOCÊ GANHOU!!!");
+												bd.close();
+												System.exit(0); // Close the game
+											} catch (SQLException erro) {
+											}
 									}
 								}
 							}
@@ -306,7 +362,7 @@ public class Ex extends JPanel{
 						rs_1.close();
 						cons_1.close();
 						bd.close();
-					} catch (SQLException erro) {
+						}} catch (SQLException erro) {
 					}
 				} else {
 					System.out.println("Erro ao conectar!");
@@ -325,7 +381,12 @@ public class Ex extends JPanel{
 						PreparedStatement cons_1 = bd.c.prepareStatement(consulta_1);
 						ResultSet rs_1 = cons_1.executeQuery();
 						
-						
+						remove(bt1);
+						add(bt2);
+						remove(bt3);
+						add(bt4);	
+						add(bt5);
+						add(bt6);
 						
 						while (rs_1.next()) {
 							int bt_clic = rs_1.getInt("bt_clic");
@@ -390,6 +451,17 @@ public class Ex extends JPanel{
 										String updt_2 = "UPDATE astrarium SET bt_clic = 3";
 										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
 										int updt_22 = up_2.executeUpdate();
+										if(pos1.isVisible() == true & pos2.isVisible() == true & pos3.isVisible() == true & pos4.isVisible() == true & pos5.isVisible() == true & pos6.isVisible() == true & pos7.isVisible() == true) {
+											try {
+												
+												String updt_3 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+												PreparedStatement up_ = bd.c.prepareStatement(updt_3);
+												int updt_ = up_.executeUpdate();
+												System.out.println("VOCÊ GANHOU!!!");
+												bd.close();
+												System.exit(0); // Close the game
+											} catch (SQLException erro) {
+											}
 										}
 									}
 								}
@@ -400,7 +472,7 @@ public class Ex extends JPanel{
 						rs_1.close();
 						cons_1.close();
 						bd.close();
-					} catch (SQLException erro) {
+						}} catch (SQLException erro) {
 					}
 				}
 			}
@@ -418,7 +490,12 @@ public class Ex extends JPanel{
 						PreparedStatement cons_1 = bd.c.prepareStatement(consulta_1);
 						ResultSet rs_1 = cons_1.executeQuery();
 						
-						
+						remove(bt1);
+						add(bt2);
+						add(bt3);
+						remove(bt4);	
+						remove(bt5);
+						remove(bt6);
 						
 						while (rs_1.next()) {
 							int bt_clic = rs_1.getInt("bt_clic");
@@ -467,6 +544,17 @@ public class Ex extends JPanel{
 										String updt_2 = "UPDATE astrarium SET bt_clic = 4";
 										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
 										int updt_22 = up_2.executeUpdate();
+										if(pos1.isVisible() == true & pos2.isVisible() == true & pos3.isVisible() == true & pos4.isVisible() == true & pos5.isVisible() == true & pos6.isVisible() == true & pos7.isVisible() == true) {
+											try {
+												
+												String updt_3 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+												PreparedStatement up_ = bd.c.prepareStatement(updt_3);
+												int updt_ = up_.executeUpdate();
+												System.out.println("VOCÊ GANHOU!!!");
+												bd.close();
+												System.exit(0); // Close the game
+											} catch (SQLException erro) {
+											}
 									}
 								}
 							}
@@ -476,7 +564,7 @@ public class Ex extends JPanel{
 						rs_1.close();
 						cons_1.close();
 						bd.close();
-					} catch (SQLException erro) {
+						}} catch (SQLException erro) {
 					}
 				}
 			}
@@ -494,7 +582,12 @@ public class Ex extends JPanel{
 						PreparedStatement cons_1 = bd.c.prepareStatement(consulta_1);
 						ResultSet rs_1 = cons_1.executeQuery();
 						
-						
+						remove(bt1);
+						add(bt2);
+						add(bt3);
+						remove(bt4);	
+						remove(bt5);
+						remove(bt6);
 						
 						while (rs_1.next()) {
 							int bt_clic = rs_1.getInt("bt_clic");
@@ -543,6 +636,17 @@ public class Ex extends JPanel{
 										String updt_2 = "UPDATE astrarium SET bt_clic = 5";
 										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
 										int updt_22 = up_2.executeUpdate();
+										if(pos1.isVisible() == true & pos2.isVisible() == true & pos3.isVisible() == true & pos4.isVisible() == true & pos5.isVisible() == true & pos6.isVisible() == true & pos7.isVisible() == true) {
+											try {
+												
+												String updt_3 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+												PreparedStatement up_ = bd.c.prepareStatement(updt_3);
+												int updt_ = up_.executeUpdate();
+												System.out.println("VOCÊ GANHOU!!!");
+												bd.close();
+												System.exit(0); // Close the game
+											} catch (SQLException erro) {
+											}
 									}
 								}
 							}
@@ -552,7 +656,7 @@ public class Ex extends JPanel{
 						rs_1.close();
 						cons_1.close();
 						bd.close();
-					} catch (SQLException erro) {
+						}} catch (SQLException erro) {
 					}
 				}
 			}
@@ -570,7 +674,12 @@ public class Ex extends JPanel{
 						PreparedStatement cons_1 = bd.c.prepareStatement(consulta_1);
 						ResultSet rs_1 = cons_1.executeQuery();
 						
-						
+						remove(bt1);
+						remove(bt2);
+						add(bt3);
+						remove(bt4);	
+						remove(bt5);
+						remove(bt6);
 						
 						while (rs_1.next()) {
 							int bt_clic = rs_1.getInt("bt_clic");
@@ -604,13 +713,30 @@ public class Ex extends JPanel{
 										if (bt_clic_2 == 6 & bt_clic_3 == 3 & pos7.isVisible() == false|| bt_clic_2 == 3 & bt_clic_3 == 6 & pos7.isVisible() == false) {
 											pos7.setVisible(true);
 										}else if(bt_clic_2 == 6 & bt_clic_3 == 3 & pos7.isVisible() == true|| bt_clic_2 == 3 & bt_clic_3 == 6 & pos7.isVisible() == true) {
-											System.out.println("Linha já estabelecida");										
+											System.out.println("Linha já estabelecida");
+											remove(bt1);
+											remove(bt2);
+											remove(bt3);
+											remove(bt4);	
+											remove(bt5);
+											remove(bt6);
 										}else {
 											System.out.println("Botão fora de alcance");
 										}
 										String updt_2 = "UPDATE astrarium SET bt_clic = 6";
 										PreparedStatement up_2 = bd.c.prepareStatement(updt_2);
 										int updt_22 = up_2.executeUpdate();
+										if(pos1.isVisible() == true & pos2.isVisible() == true & pos3.isVisible() == true & pos4.isVisible() == true & pos5.isVisible() == true & pos6.isVisible() == true & pos7.isVisible() == true) {
+											try {
+												
+												String updt_3 = "UPDATE astrarium SET bt_clic = 0, bt_atual = 0";
+												PreparedStatement up_ = bd.c.prepareStatement(updt_3);
+												int updt_ = up_.executeUpdate();
+												System.out.println("VOCÊ GANHOU!!!");
+												bd.close();
+												System.exit(0); // Close the game
+											} catch (SQLException erro) {
+											}
 									}
 								}
 							}
@@ -620,7 +746,7 @@ public class Ex extends JPanel{
 						rs_1.close();
 						cons_1.close();
 						bd.close();
-					} catch (SQLException erro) {
+						}} catch (SQLException erro) {
 					}
 				}
 			}
